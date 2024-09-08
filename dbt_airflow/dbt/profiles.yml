@@ -1,7 +1,7 @@
 default:
   outputs:
     dev:
-      account: rpbypne-hl75678
+      account: [account_name]
       database: DBT_DEV_DB
       password: dbtuser
       role: DBT_ROLE

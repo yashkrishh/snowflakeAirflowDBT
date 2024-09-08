@@ -18,7 +18,7 @@ default_args = {
 with DAG('2_daily_transformation_analysis', default_args=default_args, schedule_interval='@once') as dag:
     task_1 = BashOperator(
         task_id='daily_transform',
-        bash_command='cd dbt && dbt run --models transform --profiles-dir .',
+        bash_command='cd /opt/airflow/dbt && dbt run --models transform --profiles-dir .',
         env={
             'dbt_user': 'DBT_USER',
             'dbt_password': 'dbtuser',
@@ -29,7 +29,7 @@ with DAG('2_daily_transformation_analysis', default_args=default_args, schedule_
 
     task_2 = BashOperator(
         task_id='daily_analysis',
-        bash_command='cd dbt && dbt run --models analysis --profiles-dir .',
+        bash_command='cd /opt/airflow/dbt && dbt run --models analysis --profiles-dir .',
         env={
             'dbt_user': 'DBT_USER',
             'dbt_password': 'dbtuser',

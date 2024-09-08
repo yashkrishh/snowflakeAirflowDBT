@@ -39,12 +39,14 @@
 # _PIP_ADDITIONAL_REQUIREMENTS - Additional PIP requirements to add when starting all containers.
 #                                Default: ''
 #
-# Feel free to modify this file to suit your needs.
+# Feel free to modify this file to suit your needs.apache/airflow:2.10.1-pythonX.Y
 ---
 version: '3'
 x-airflow-common:
   &airflow-common
-  image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.1.2}
+  build:
+    context: .  # The current directory where the Dockerfile is located
+  image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:latest-python3.12}
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
@@ -60,8 +62,8 @@ x-airflow-common:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
-    - ./dbt:/dbt
-    - ./dags:/dags
+    - ./dbt:/opt/airflow/dbt
+  working_dir: /opt/airflow/dbt
   user: "${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-50000}"
   depends_on:
     redis:

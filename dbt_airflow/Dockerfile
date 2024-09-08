@@ -1,7 +1,17 @@
-FROM apache/airflow:2.1.2
+# Use the latest Airflow image with Python 3.12
+FROM apache/airflow:latest-python3.12
 
-# Copy your requirements.txt file to the container
+# Set the working directory
+WORKDIR /opt/airflow
+
+# Copy the requirements.txt file to the container
 COPY requirements.txt ./
 
-# Install the required Python packages
-RUN pip install -r requirements.txt
+# Check if the requirements.txt was copied
+RUN ls -al /opt/airflow
+
+# Install the required Python packages from the requirements.txt file
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Check that pip packages are installed
+RUN pip list
